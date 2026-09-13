@@ -1,0 +1,43 @@
+# ---------------------------------------------------------------
+# PC1 - CC65 Programacion Concurrente y Distribuida
+# Regla dura: GitHub rechaza archivos > 100 MB.
+# data/raw/ contiene el CSV original de 793.79 MB -> NUNCA se commitea.
+# ---------------------------------------------------------------
+
+# Dataset original (se descarga con scripts/descargar_dataset.py)
+data/raw/
+
+# Cualquier CSV suelto fuera de las carpetas controladas
+*.csv
+
+# Excepciones: estos SI se commitean (muestra chica y partes del limpio)
+!data/sample/*.csv
+!data/processed/dataset_limpio.part*.csv.gz
+
+# El dataset limpio reensamblado en local (101.5 MB > limite de GitHub).
+# Se reconstruye con: python scripts/unir_dataset.py
+data/processed/dataset_limpio.csv.gz
+
+# Salidas intermedias / temporales
+*.tmp
+*.log
+scratch/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# Sistema operativo
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Editores
+.vscode/
+.idea/
+*.swp
