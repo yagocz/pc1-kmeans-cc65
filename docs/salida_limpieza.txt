@@ -1,0 +1,74 @@
+==============================================================================
+LIMPIEZA - Registros de Nacidos Vivos (CNV) MINSA 2015-2025
+==============================================================================
+Entrada : minsa_nacidos_vivos.csv (793.79 MB)
+Chunks  : 200,000 filas   |   modo: streaming (2 pasadas)
+
+PASADA 1/2 - duplicados, normalizacion, nulos y rango clinico
+------------------------------------------------------------------------------
+Filas originales                    : 4,874,510
+PASO 0 - filas reparadas (';')      : 388
+PASO 1 - duplicados exactos         : -867
+PASO 2 - nulos / centinela -1       : -5,168
+PASO 4a - fuera de rango clinico    : -105
+Subtotal tras pasada 1              : 4,868,370
+
+PASO 4b - outliers por IQR (k=1.5)
+------------------------------------------------------------------------------
+feature                 Q1        Q3       IQR     lim_inf     lim_sup
+PESO_NACIDO        2970.00   3580.00    610.00     2055.00     4495.00
+TALLA_NACIDO         48.00     50.50      2.50       44.25       54.25
+DUR_EMB_PARTO        38.00     40.00      2.00       35.00       43.00
+Edad_Madre           23.00     33.00     10.00        8.00       48.00
+
+Filas eliminadas por IQR : -271,233
+Filas tras outliers      : 4,597,137
+
+PASADA 2/2 - aplicando IQR, escalando y escribiendo salida
+------------------------------------------------------------------------------
+Filas escritas : 4,597,137
+
+PASO 5 - features seleccionadas para K-Means
+------------------------------------------------------------------------------
+  PESO_NACIDO  (300-7000 valido)
+  TALLA_NACIDO  (20-70 valido)
+  DUR_EMB_PARTO  (20-45 valido)
+  Edad_Madre  (10-60 valido)
+
+PASO 6 - estadisticas ANTES del escalado
+------------------------------------------------------------------------------
+feature                min       max       media        desv
+PESO_NACIDO        2055.00   4495.00   3294.8199    424.8124
+TALLA_NACIDO         44.30     54.20     49.4305      1.7781
+DUR_EMB_PARTO        35.00     43.00     38.8311      1.1894
+Edad_Madre           10.00     48.00     28.2344      6.8913
+
+Escalado elegido: ESTANDARIZACION Z-SCORE.
+K-Means minimiza la distancia euclidiana, de modo que una variable
+con rango amplio (peso: cientos a miles de gramos) domina por
+completo a una de rango corto (gestacion: 20-45 semanas) si no se
+escala. Se prefiere z-score sobre min-max porque min-max comprime
+la escala en funcion de los extremos y quedaria condicionado por
+los valores limite que sobrevivieron al corte IQR.
+
+PASO 6 - estadisticas DESPUES del escalado (z-score)
+------------------------------------------------------------------------------
+Por construccion media~0 y desv~1 en todas las features.
+  PESO_NACIDO_ESC      min= -2.9185  max=  2.8252  media=0.000000  desv=1.000000
+  TALLA_NACIDO_ESC     min= -2.8855  max=  2.6824  media=0.000000  desv=1.000000
+  DUR_EMB_PARTO_ESC    min= -3.2209  max=  3.5050  media=0.000000  desv=1.000000
+  Edad_Madre_ESC       min= -2.6460  max=  2.8682  media=0.000000  desv=1.000000
+
+==============================================================================
+RESUMEN FINAL
+==============================================================================
+Filas originales : 4,874,510
+Filas finales    : 4,597,137
+Filas eliminadas : 277,373 (5.69%)
+Retencion        : 94.31%
+
+SUPERA 1,000,000 DE REGISTROS: SI  (4,597,137)
+
+dataset_limpio.csv.gz : 102.44 MB
+muestra_5000.csv      : 0.77 MB
+==============================================================================
