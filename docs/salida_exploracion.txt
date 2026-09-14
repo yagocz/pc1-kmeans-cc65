@@ -1,0 +1,117 @@
+==============================================================================
+EXPLORACION - Registros de Nacidos Vivos (CNV) MINSA 2015-2025
+==============================================================================
+Archivo     : minsa_nacidos_vivos.csv
+Peso        : 793.79 MB
+Separador   : ';'   Encoding: utf-8
+
+Procesando por chunks de 250,000 filas...
+
+------------------------------------------------------------------------------
+1) DIMENSIONES
+------------------------------------------------------------------------------
+Filas de datos : 4,874,510
+Columnas       : 22
+Supera 1,000,000 de registros: SI
+
+Filas con ';' literal dentro de DESC_OCUPACION (reparadas, no descartadas): 388
+
+------------------------------------------------------------------------------
+2) COLUMNAS Y TIPO DECLARADO
+------------------------------------------------------------------------------
+  FecNac_Año                   categorica / texto
+  FecNac_Mes                   categorica / texto
+  PESO_NACIDO                  numerica continua
+  TALLA_NACIDO                 numerica continua
+  DUR_EMB_PARTO                numerica continua
+  Condicion_Parto              categorica / texto
+  sexo_nacido                  categorica / texto
+  Tipo_Parto                   categorica / texto
+  Edad_Madre                   numerica continua
+  Estado_Civil                 categorica / texto
+  Nivel_Intrucción_Madre       categorica / texto
+  DESC_OCUPACION               categorica / texto
+  Num_embar_madre              categorica / texto
+  Hijos_vivo_madre             categorica / texto
+  Hijos_fallec_madre           categorica / texto
+  nacmuer_abort_madre          categorica / texto
+  Pais_Madre                   categorica / texto
+  IdUbigeoInei                 categorica / texto
+  Ipress                       categorica / texto
+  Lugar_Nacido                 categorica / texto
+  Atiende_Parto                categorica / texto
+  Financiador_Parto            categorica / texto
+
+------------------------------------------------------------------------------
+3) VALORES FALTANTES POR COLUMNA
+------------------------------------------------------------------------------
+columna                           vacios       %    valor -1       %
+FecNac_Año                             0   0.00%           0   0.00%
+FecNac_Mes                             0   0.00%           0   0.00%
+PESO_NACIDO                            0   0.00%       1,315   0.03%
+TALLA_NACIDO                           0   0.00%       4,697   0.10%
+DUR_EMB_PARTO                          0   0.00%           0   0.00%
+Condicion_Parto                        0   0.00%           0   0.00%
+sexo_nacido                            0   0.00%           0   0.00%
+Tipo_Parto                             0   0.00%           0   0.00%
+Edad_Madre                             0   0.00%           0   0.00%
+Estado_Civil                           0   0.00%           0   0.00%
+Nivel_Intrucción_Madre                 0   0.00%           0   0.00%
+DESC_OCUPACION                         0   0.00%           0   0.00%
+Num_embar_madre                        0   0.00%      49,841   1.02%
+Hijos_vivo_madre                       0   0.00%      37,530   0.77%
+Hijos_fallec_madre                     0   0.00%   4,726,940  96.97%
+nacmuer_abort_madre                    0   0.00%           0   0.00%
+Pais_Madre                             0   0.00%           0   0.00%
+IdUbigeoInei                           0   0.00%       8,640   0.18%
+Ipress                                 0   0.00%           1   0.00%
+Lugar_Nacido                           0   0.00%           0   0.00%
+Atiende_Parto                          0   0.00%           0   0.00%
+Financiador_Parto                      0   0.00%           0   0.00%
+
+NOTA: el CNV usa -1 como codigo de 'sin dato', no como valor real.
+
+------------------------------------------------------------------------------
+4) DUPLICADOS EXACTOS (fila completa identica)
+------------------------------------------------------------------------------
+Filas duplicadas : 974  (0.02%)
+Filas unicas     : 4,873,536
+
+------------------------------------------------------------------------------
+5) ESTADISTICAS DE COLUMNAS NUMERICAS (sobre valores parseables)
+------------------------------------------------------------------------------
+columna                        n         min         max       media        desv
+PESO_NACIDO            4,874,510        -1.0     8,000.0    3,248.09      528.73
+TALLA_NACIDO           4,874,510        -1.0     5,334.0       49.10        5.49
+DUR_EMB_PARTO          4,874,510         3.0        99.0       38.62        1.72
+Edad_Madre             4,874,510         0.0        62.0       28.30        6.94
+
+NOTA: los min/max extremos confirman la necesidad de tratar outliers
+      (ej. pesos de 0 g o gestaciones imposibles).
+
+------------------------------------------------------------------------------
+6) CARDINALIDAD DE COLUMNAS CATEGORICAS
+------------------------------------------------------------------------------
+columna                        valores distintos
+FecNac_Año                                    11
+FecNac_Mes                                    12
+Condicion_Parto                                4
+sexo_nacido                                    3
+Tipo_Parto                                     5
+Estado_Civil                                   7
+Nivel_Intrucción_Madre                        11
+DESC_OCUPACION                             2,875
+Num_embar_madre                                6
+Hijos_vivo_madre                               6
+Hijos_fallec_madre                             6
+nacmuer_abort_madre                           13
+Pais_Madre                                   127
+IdUbigeoInei                               1,893
+Ipress                                     2,314
+Lugar_Nacido                                   6
+Atiende_Parto                                 13
+Financiador_Parto                              9
+
+==============================================================================
+FIN DE LA EXPLORACION
+==============================================================================
