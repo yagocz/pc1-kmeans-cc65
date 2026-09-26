@@ -1,0 +1,25 @@
+==============================================================
+USO DE RECURSOS DE COMPUTO POR CONFIGURACION
+==============================================================
+  SO / arquitectura : windows / amd64
+  version de Go     : go1.27.0
+  NumCPU (logicos)  : 12
+  GOMAXPROCS        : 12
+  registros         : 4597137
+  k / iteraciones   : 5 / 10
+==============================================================
+
+config           reloj(ms)    heap pico   heap total   goroutines   GC ciclos
+secuencial         1692.78    140.57 MB      0.00 MB            1           0
+concur. W=2         956.86    140.58 MB      0.00 MB            1           0
+concur. W=4         652.45    140.58 MB      0.01 MB            1           0
+concur. W=6         493.27    140.59 MB      0.01 MB            1           0
+concur. W=8         504.03    140.60 MB      0.01 MB            1           0
+concur. W=12        365.43    140.62 MB      0.03 MB            1           0
+concur. W=16        344.60    140.63 MB      0.02 MB            1           0
+==============================================================
+NOTA: pool PERSISTENTE: las W goroutines se crean UNA sola vez y viven
+      toda la ejecucion, bloqueadas en <-proceed[id] entre iteraciones.
+      Mensajes por iteracion: 2xW (W dispatch + W barrera).
+      Cada worker asigna 20 floats + 5 ints de acumuladores locales.
+==============================================================

@@ -41,3 +41,29 @@ desktop.ini
 .vscode/
 .idea/
 *.swp
+
+# ---------------------------------------------------------------
+# PC2 - Entregable 2
+# ---------------------------------------------------------------
+
+# Dataset binario para Go (140 MB) - se genera con scripts/csv_a_binario.py
+data/processed/features.bin
+
+# Dataset limpio reensamblado (101 MB) - se genera con scripts/unir_dataset.py
+data/processed/dataset_limpio.csv.gz
+
+# Binarios compilados de Go
+go/*.exe
+go/**/*.exe
+*.exe
+
+# Spin: verificador generado y binario compilado
+promela/pan.*
+promela/*.trail
+tools/
+
+# Excepcion: los graficos del informe SI se versionan
+!docs/*.png
+
+# Excepcion: el CSV de resultados del benchmark SI se versiona
+!docs/resultados_bench.csv
