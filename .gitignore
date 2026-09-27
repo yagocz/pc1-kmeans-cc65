@@ -13,6 +13,7 @@ data/raw/
 # Excepciones: estos SI se commitean (muestra chica y partes del limpio)
 !data/sample/*.csv
 !data/processed/dataset_limpio.part*.csv.gz
+!docs/resultados_bench.csv
 
 # El dataset limpio reensamblado en local (101.5 MB > limite de GitHub).
 # Se reconstruye con: python scripts/unir_dataset.py
