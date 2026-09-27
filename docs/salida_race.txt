@@ -1,0 +1,49 @@
+==============================================================
+DETECTOR DE CONDICIONES DE CARRERA DE GO (-race)
+==============================================================
+Arquitectura: Worker Pool persistente con dispatch por canales
+(la misma verificada en promela/kmeans_sync.pml)
+Comando: CGO_ENABLED=1 go run -race ./concurrente -k 5 -iter 3 -w 6
+gcc.exe (Rev5, Built by MSYS2 project) 16.1.0
+--------------------------------------------------------------
+==============================================================
+K-MEANS CONCURRENTE - Worker Pool con dispatch por canales
+==============================================================
+registros cargados : 4597137
+dimensiones        : 4
+k (clusters)       : 5
+iteraciones        : 3 (fijas, sin criterio de convergencia)
+semilla            : 42
+WORKERS            : 6
+GOMAXPROCS         : 12
+NumCPU             : 12
+--------------------------------------------------------------
+ARQUITECTURA (verificada en promela/kmeans_sync.pml)
+  pool persistente  : 6 goroutines creadas UNA vez
+  canales proceed[] : 6 (uno por worker, dispatch)
+  canal done        : capacidad 6 (barrera)
+  sync.Mutex        : protege escritura de centroides
+  sync.WaitGroup    : cierre ordenado del pool
+--------------------------------------------------------------
+PARTICION DEL DATASET
+  worker  0 : [        0 ,    766190)  =>     766190 puntos  (procesado 3 veces)
+  worker  1 : [   766190 ,   1532380)  =>     766190 puntos  (procesado 3 veces)
+  worker  2 : [  1532380 ,   2298570)  =>     766190 puntos  (procesado 3 veces)
+  worker  3 : [  2298570 ,   3064759)  =>     766189 puntos  (procesado 3 veces)
+  worker  4 : [  3064759 ,   3830948)  =>     766189 puntos  (procesado 3 veces)
+  worker  5 : [  3830948 ,   4597137)  =>     766189 puntos  (procesado 3 veces)
+--------------------------------------------------------------
+CENTROIDES FINALES
+cluster         PESO_ESC     TALLA_ESC     GESTA_ESC      EDAD_ESC
+0               0.800186      0.802308      0.693482     -0.392020
+1              -1.108895     -1.237159     -0.255521      0.423140
+2              -0.063403      0.109200     -0.702069      0.032121
+3               0.347447      0.208555      0.326259      1.226900
+4              -0.938140     -0.866255     -0.719083     -1.119049
+--------------------------------------------------------------
+puntos por cluster : [1475626 688562 885175 848577 699197]
+inercia (MSSC)     : 9061928.222268
+--------------------------------------------------------------
+mensajes por iteracion : 6 dispatch + 6 barrera = 12
+TIEMPO DEL ALGORITMO   : 1815.699 ms
+==============================================================
