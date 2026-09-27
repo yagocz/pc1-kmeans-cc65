@@ -1,0 +1,212 @@
+==============================================================
+VERIFICACION FORMAL DEL MODELO PROMELA - kmeans_sync.pml
+==============================================================
+Modelo: promela/kmeans_sync.pml   (W=3 workers, 3 iteraciones)
+Autor del modelo: Ricardo Rivas
+Reproducido el 2026-09-26 con Spin 6.5.2 local
+
+El modelo formaliza la arquitectura que implementa
+go/concurrente/main.go: Worker Pool persistente con dispatch
+por canales proceed[id] y barrera por canal done.
+==============================================================
+
+--------------------------------------------------------------
+1) SEGURIDAD: aserciones y estados finales invalidos (deadlocks)
+--------------------------------------------------------------
+
+(Spin Version 6.5.2 -- 18 September 2025)
+	+ Partial Order Reduction
+
+Full statespace search for:
+	never claim         	- (not selected)
+	assertion violations	+
+	acceptance   cycles 	- (not selected)
+	invalid end states	+
+
+State-vector 96 byte, depth reached 325, errors: 0
+    20940 states, stored
+     9790 states, matched
+    30730 transitions (= stored+matched)
+       12 atomic steps
+hash conflicts:         3 (resolved)
+
+Stats on memory usage (in Megabytes):
+    2.476	equivalent memory usage for states (stored*(State-vector + overhead))
+    1.842	actual memory usage for states (compression: 74.39%)
+         	state-vector as stored = 64 byte + 28 byte overhead
+  128.000	memory used for hash table (-w24)
+    0.534	memory used for DFS stack (-m10000)
+  130.292	total actual memory usage
+
+
+unreached in proctype Worker
+	(0 of 29 states)
+unreached in proctype Coordinador
+	(0 of 60 states)
+unreached in init
+	(0 of 12 states)
+unreached in claim exclusion_mutua
+	_spin_nvr.tmp:3, state 6, "(!(!(((fase==ACTUALIZACION)&&(en_asignacion>0)))))"
+	_spin_nvr.tmp:3, state 6, "(1)"
+	_spin_nvr.tmp:8, state 10, "-end-"
+	(2 of 10 states)
+unreached in claim escritor_unico
+	_spin_nvr.tmp:12, state 6, "(!((escritores<=1)))"
+	_spin_nvr.tmp:12, state 6, "(1)"
+	_spin_nvr.tmp:17, state 10, "-end-"
+	(2 of 10 states)
+unreached in claim terminacion
+	_spin_nvr.tmp:22, state 3, "(!((fase==TERMINADO)))"
+	_spin_nvr.tmp:24, state 6, "-end-"
+	(2 of 6 states)
+
+pan: elapsed time 0.007 seconds
+
+--------------------------------------------------------------
+2) PROPIEDADES LTL
+--------------------------------------------------------------
+
+########## LTL: exclusion_mutua ##########
+pan: ltl formula exclusion_mutua
+
+(Spin Version 6.5.2 -- 18 September 2025)
+	+ Partial Order Reduction
+
+Full statespace search for:
+	never claim         	+ (exclusion_mutua)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness disabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 104 byte, depth reached 639, errors: 0
+    20940 states, stored
+     9794 states, matched
+    30734 transitions (= stored+matched)
+       12 atomic steps
+hash conflicts:         7 (resolved)
+
+Stats on memory usage (in Megabytes):
+    2.636	equivalent memory usage for states (stored*(State-vector + overhead))
+    2.038	actual memory usage for states (compression: 77.33%)
+         	state-vector as stored = 74 byte + 28 byte overhead
+  128.000	memory used for hash table (-w24)
+    0.534	memory used for DFS stack (-m10000)
+  130.487	total actual memory usage
+
+
+unreached in proctype Worker
+	(0 of 29 states)
+unreached in proctype Coordinador
+	(0 of 60 states)
+unreached in init
+	(0 of 12 states)
+unreached in claim exclusion_mutua
+	_spin_nvr.tmp:8, state 10, "-end-"
+	(1 of 10 states)
+
+pan: elapsed time 0.01 seconds
+
+########## LTL: escritor_unico ##########
+pan: ltl formula escritor_unico
+
+(Spin Version 6.5.2 -- 18 September 2025)
+	+ Partial Order Reduction
+
+Full statespace search for:
+	never claim         	+ (escritor_unico)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness disabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 104 byte, depth reached 639, errors: 0
+    20940 states, stored
+     9794 states, matched
+    30734 transitions (= stored+matched)
+       12 atomic steps
+hash conflicts:         6 (resolved)
+
+Stats on memory usage (in Megabytes):
+    2.636	equivalent memory usage for states (stored*(State-vector + overhead))
+    2.038	actual memory usage for states (compression: 77.33%)
+         	state-vector as stored = 74 byte + 28 byte overhead
+  128.000	memory used for hash table (-w24)
+    0.534	memory used for DFS stack (-m10000)
+  130.487	total actual memory usage
+
+
+unreached in proctype Worker
+	(0 of 29 states)
+unreached in proctype Coordinador
+	(0 of 60 states)
+unreached in init
+	(0 of 12 states)
+unreached in claim escritor_unico
+	_spin_nvr.tmp:17, state 10, "-end-"
+	(1 of 10 states)
+
+pan: elapsed time 0.009 seconds
+
+########## LTL: terminacion ##########
+pan: ltl formula terminacion
+
+(Spin Version 6.5.2 -- 18 September 2025)
+	+ Partial Order Reduction
+
+Full statespace search for:
+	never claim         	+ (terminacion)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness disabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 104 byte, depth reached 594, errors: 0
+    20704 states, stored (41408 visited)
+    40199 states, matched
+    81607 transitions (= visited+matched)
+       24 atomic steps
+hash conflicts:        20 (resolved)
+
+Stats on memory usage (in Megabytes):
+    2.606	equivalent memory usage for states (stored*(State-vector + overhead))
+    1.941	actual memory usage for states (compression: 74.47%)
+         	state-vector as stored = 70 byte + 28 byte overhead
+  128.000	memory used for hash table (-w24)
+    0.534	memory used for DFS stack (-m10000)
+  130.390	total actual memory usage
+
+
+unreached in proctype Worker
+	kmeans_sync.pml:68, state 29, "-end-"
+	(1 of 29 states)
+unreached in proctype Coordinador
+	kmeans_sync.pml:117, state 53, "proceed[i]!255"
+	kmeans_sync.pml:116, state 54, "i = (i+1)"
+	kmeans_sync.pml:116, state 57, "((i<=(3-1)))"
+	kmeans_sync.pml:116, state 57, "else"
+	kmeans_sync.pml:119, state 60, "-end-"
+	(4 of 60 states)
+unreached in init
+	(0 of 12 states)
+unreached in claim terminacion
+	_spin_nvr.tmp:24, state 6, "-end-"
+	(1 of 6 states)
+
+pan: elapsed time 0.023 seconds
+pan: rate 1800347.8 states/second
+
+==============================================================
+RESUMEN DE RESULTADOS
+==============================================================
+Verificacion                       Estados  Transiciones  Errores
+Seguridad (aserciones+deadlocks)    20,940        30,730        0
+LTL exclusion_mutua                 20,940        30,734        0
+LTL escritor_unico                  20,940        30,734        0
+LTL terminacion                     20,704        81,607        0
+
+Todo el codigo es alcanzable: 0 de 29 estados sin alcanzar en
+Worker, 0 de 60 en Coordinador, 0 de 12 en init. No hay codigo
+muerto en el modelo.
+
+CONCLUSION: la sincronizacion esta libre de condicion de carrera
+y de deadlock, verificado de forma EXHAUSTIVA (todos los
+entrelazados posibles), no solo por simulacion.
+==============================================================

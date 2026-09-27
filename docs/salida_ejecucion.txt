@@ -1,0 +1,106 @@
+==============================================================
+EVIDENCIA DE EJECUCION - K-MEANS SECUENCIAL vs CONCURRENTE
+==============================================================
+Fecha: 2026-09-26
+Maquina: AMD Ryzen 5 5600X (6 nucleos fisicos / 12 logicos), 15.9 GB RAM
+SO: Windows 11 Pro build 26200   |   Go 1.27.0
+
+La version concurrente implementa la arquitectura verificada
+formalmente en promela/kmeans_sync.pml: Worker Pool persistente
+con dispatch por canales proceed[id] y barrera por canal done.
+
+##############################################################
+# 1) VERSION SECUENCIAL
+##############################################################
+==============================================================
+K-MEANS SECUENCIAL
+==============================================================
+registros cargados : 4597137
+dimensiones        : 4
+k (clusters)       : 5
+iteraciones        : 10 (fijas, sin criterio de convergencia)
+semilla            : 42
+GOMAXPROCS         : 12
+--------------------------------------------------------------
+CENTROIDES FINALES
+cluster         PESO_ESC     TALLA_ESC     GESTA_ESC      EDAD_ESC
+0               0.836239      0.835119      0.729032     -0.590103
+1              -1.209021     -1.257951     -1.229538      0.584792
+2               0.069611      0.191042     -0.672547      0.033078
+3               0.568650      0.485719      0.469061      1.123070
+4              -0.714604     -0.704354      0.146827     -0.886672
+--------------------------------------------------------------
+puntos por cluster : [1069761 658842 866990 991181 1010363]
+inercia (MSSC)     : 8431227.573125
+--------------------------------------------------------------
+TIEMPO DEL ALGORITMO : 1792.213 ms
+==============================================================
+
+##############################################################
+# 2) VERSION CONCURRENTE (Worker Pool + canales, W=12)
+##############################################################
+==============================================================
+K-MEANS CONCURRENTE - Worker Pool con dispatch por canales
+==============================================================
+registros cargados : 4597137
+dimensiones        : 4
+k (clusters)       : 5
+iteraciones        : 10 (fijas, sin criterio de convergencia)
+semilla            : 42
+WORKERS            : 12
+GOMAXPROCS         : 12
+NumCPU             : 12
+--------------------------------------------------------------
+ARQUITECTURA (verificada en promela/kmeans_sync.pml)
+  pool persistente  : 12 goroutines creadas UNA vez
+  canales proceed[] : 12 (uno por worker, dispatch)
+  canal done        : capacidad 12 (barrera)
+  sync.Mutex        : protege escritura de centroides
+  sync.WaitGroup    : cierre ordenado del pool
+--------------------------------------------------------------
+PARTICION DEL DATASET
+  worker  0 : [        0 ,    383095)  =>     383095 puntos  (procesado 10 veces)
+  worker  1 : [   383095 ,    766190)  =>     383095 puntos  (procesado 10 veces)
+  worker  2 : [   766190 ,   1149285)  =>     383095 puntos  (procesado 10 veces)
+  worker  3 : [  1149285 ,   1532380)  =>     383095 puntos  (procesado 10 veces)
+  worker  4 : [  1532380 ,   1915475)  =>     383095 puntos  (procesado 10 veces)
+  worker  5 : [  1915475 ,   2298570)  =>     383095 puntos  (procesado 10 veces)
+  worker  6 : [  2298570 ,   2681665)  =>     383095 puntos  (procesado 10 veces)
+  worker  7 : [  2681665 ,   3064760)  =>     383095 puntos  (procesado 10 veces)
+  worker  8 : [  3064760 ,   3447855)  =>     383095 puntos  (procesado 10 veces)
+  worker  9 : [  3447855 ,   3830949)  =>     383094 puntos  (procesado 10 veces)
+  worker 10 : [  3830949 ,   4214043)  =>     383094 puntos  (procesado 10 veces)
+  worker 11 : [  4214043 ,   4597137)  =>     383094 puntos  (procesado 10 veces)
+--------------------------------------------------------------
+CENTROIDES FINALES
+cluster         PESO_ESC     TALLA_ESC     GESTA_ESC      EDAD_ESC
+0               0.836239      0.835119      0.729032     -0.590103
+1              -1.209021     -1.257951     -1.229538      0.584792
+2               0.069611      0.191042     -0.672547      0.033078
+3               0.568650      0.485719      0.469061      1.123070
+4              -0.714604     -0.704354      0.146827     -0.886672
+--------------------------------------------------------------
+puntos por cluster : [1069761 658842 866990 991181 1010363]
+inercia (MSSC)     : 8431227.573126
+--------------------------------------------------------------
+mensajes por iteracion : 12 dispatch + 12 barrera = 24
+TIEMPO DEL ALGORITMO   : 414.671 ms
+==============================================================
+
+==============================================================
+COMPROBACION DE CORRECCION
+==============================================================
+Ambas versiones producen los MISMOS centroides finales y los
+mismos conteos por cluster, partiendo de la misma semilla (42).
+La inercia difiere solo en el ultimo digito decimal, por el
+orden distinto de las sumas en punto flotante: es error de
+redondeo esperado, NO un fallo de sincronizacion.
+
+Ademas, la version concurrente lleva aserciones en tiempo de
+ejecucion que replican los assert del modelo Promela:
+  - assert(fase == ASIGNACION) al entrar un worker
+  - assert(escritores == 0) al leer centroides
+  - assert(en_asignacion == 0) al entrar en actualizacion
+  - assert(procesado[i] == iter+1) en la reduccion
+Ninguna se disparo durante las ejecuciones.
+==============================================================
