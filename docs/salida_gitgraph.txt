@@ -1,0 +1,27 @@
+*   def58e8  (HEAD -> main, origin/main) yagocz: Entregable PC2: K-Means secuencial vs concurrente en Go, modelo Promela verificado en SPIN y analisis de speedup
+|\  
+| *   07ede7c  (origin/develop, develop) yagocz: Merge feature/analisis-rendimiento: analisis de speedup, escalabilidad y recursos
+| |\  
+| | * bacc652  (origin/feature/analisis-rendimiento) Andre Angel Chipana Rios: Corrige analisis de rendimiento: rigor estadistico, trazabilidad Go/Promela y sweet spot como meseta
+| | * 38411af  Andre Angel Chipana Rios: Analisis de speedup, escalabilidad y recursos de computo
+| * |   9af9893  yagocz: Merge feature/go-concurrente: K-Means secuencial y concurrente en Go, benchmark y graficos
+| |\ \  
+| | * | 41a4e04  (origin/feature/go-concurrente, feature/go-concurrente) yagocz: Quita el material de andamiaje para las secciones 10 y 11
+| | * | ef5fce1  yagocz: Esqueleto del analisis de calidad del clustering para Andre
+| | * | 3751312  yagocz: Material de insumo para las secciones 10 y 11 del informe
+| | * | 2fb0345  yagocz: K-Means concurrente en Go alineado al modelo formal de Promela
+| | |/  
+| * |   bc6a917  yagocz: Merge feature/promela-model: modelo formal de sincronizacion verificado en SPIN
+| |\ \  
+| | |/  
+| |/|   
+| | * 477de46  (origin/feature/promela-model) Ricardo Rivas: feat: Modelo Promela de sincronizacion K-Means verificado en SPIN
+| |/  
+* | 19e6707  yagocz: Entregable PC1: dataset limpio, exploracion e informe
+|\| 
+| * 6f2c7aa  yagocz: Merge feature/eda-validacion: exploracion e informe de limpieza
+|/| 
+| * 0e3bfd9  (origin/feature/eda-validacion) Andre Angel Chipana Rios: Exploracion del dataset e informe de limpieza
+|/  
+* 23b1fb7  (origin/feature/setup-repo) Ricardo Rivas: feat: Estructura del repositorio, gitignore y scripts de dataset
+* cfde84d  (origin/feature/limpieza-dataset, origin/HEAD, feature/limpieza-dataset) yagocz: Pipeline de limpieza en streaming y dataset limpio
