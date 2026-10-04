@@ -4,14 +4,15 @@
 // PARA ANDRE - este programa responde dos preguntas que el informe todavia
 // no contesta y que el caso de uso EXIGE:
 //
-//   1) Por que k = 5 y no otro valor?  -> metodo del codo
-//   2) Que significa clinicamente cada cluster?  -> des-escalado + perfiles
+//  1. Por que k = 5 y no otro valor?  -> metodo del codo
+//  2. Que significa clinicamente cada cluster?  -> des-escalado + perfiles
 //
 // El esqueleto y el des-escalado ya estan resueltos. Lo que falta hacer
 // esta marcado con  // TODO(Andre)
 // ============================================================================
 //
 // Uso:
+//
 //	go run ./calidad -datos ../data/processed/features.bin -kmin 2 -kmax 10
 package main
 
@@ -26,7 +27,8 @@ import (
 
 // Parametros del escalado z-score aplicado en la PC1 (scripts/limpieza.py).
 // Se usan para devolver los centroides a sus unidades reales:
-//     valor_real = valor_escalado * desviacion + media
+//
+//	valor_real = valor_escalado * desviacion + media
 var (
 	medias = [kmeans.D]float64{3294.8199, 49.4305, 38.8311, 28.2344}
 	desvs  = [kmeans.D]float64{424.8124, 1.7781, 1.1894, 6.8913}
