@@ -6,23 +6,25 @@
 // Esta implementacion sigue EXACTAMENTE la arquitectura verificada en SPIN.
 // Cada elemento del modelo tiene su contraparte directa en este archivo:
 //
-//   Promela                     Go
-//   ------------------------    ------------------------------------------
-//   proctype Coordinador()      coordinador() (la goroutine principal)
-//   proctype Worker(byte id)    goroutine lanzada en el Worker Pool
-//   chan proceed[W]             canal proceed[id]: dispatch de la iteracion
-//   chan done                   canal done: barrera (W notificaciones)
-//   suma_local[id]              acumuladores privados de cada worker
-//   byte FIN = 255              senal de apagado del pool
-//   mtype fase                  variable fase (ASIGNACION/ACTUALIZACION)
-//   byte en_asignacion          contador de workers en fase de asignacion
-//   byte escritores             contador de escritores de centroides
-//   byte procesado[id]          iteraciones completadas por cada worker
+//	Promela                     Go
+//	------------------------    ------------------------------------------
+//	proctype Coordinador()      coordinador() (la goroutine principal)
+//	proctype Worker(byte id)    goroutine lanzada en el Worker Pool
+//	chan proceed[W]             canal proceed[id]: dispatch de la iteracion
+//	chan done                   canal done: barrera (W notificaciones)
+//	suma_local[id]              acumuladores privados de cada worker
+//	byte FIN = 255              senal de apagado del pool
+//	mtype fase                  variable fase (ASIGNACION/ACTUALIZACION)
+//	byte en_asignacion          contador de workers en fase de asignacion
+//	byte escritores             contador de escritores de centroides
+//	byte procesado[id]          iteraciones completadas por cada worker
 //
 // Propiedades verificadas exhaustivamente en SPIN (20,940 estados, 0 errores):
-//   [] !(fase == ACTUALIZACION && en_asignacion > 0)   exclusion mutua
-//   [] (escritores <= 1)                               escritor unico
-//   <> (fase == TERMINADO)                             terminacion
+//
+//	[] !(fase == ACTUALIZACION && en_asignacion > 0)   exclusion mutua
+//	[] (escritores <= 1)                               escritor unico
+//	<> (fase == TERMINADO)                             terminacion
+//
 // ============================================================================
 //
 // MECANISMOS DE SINCRONIZACION (exigidos por el enunciado del curso):
@@ -39,6 +41,7 @@
 // Go PURO: solo biblioteca estandar.
 //
 // Uso:
+//
 //	go run ./concurrente -datos ../data/processed/features.bin -k 5 -iter 10 -w 6
 package main
 

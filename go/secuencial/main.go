@@ -7,6 +7,7 @@
 // Go PURO: solo biblioteca estandar.
 //
 // Uso:
+//
 //	go run ./secuencial -datos ../data/processed/features.bin -k 5 -iter 10
 package main
 

@@ -12,6 +12,7 @@
 // Go PURO: solo biblioteca estandar.
 //
 // Uso:
+//
 //	go run ./bench -datos ../data/processed/features.bin -k 5 -iter 10 -n 10
 package main
 
@@ -307,11 +308,22 @@ func main() {
 		fmt.Fprintln(os.Stderr, "error al crear el CSV:", err)
 		os.Exit(1)
 	}
+	// Se comprueba el error de CADA escritura: este CSV es la evidencia que
+	// sustenta todas las cifras del informe, y un truncamiento silencioso
+	// (disco lleno, permisos) comprometeria la trazabilidad del trabajo.
 	w := csv.NewWriter(f)
-	w.Write([]string{"version", "workers", "corrida", "tiempo_ms"})
+	escribir := func(fila []string) {
+		if err := w.Write(fila); err != nil {
+			fmt.Fprintln(os.Stderr, "error al escribir el CSV:", err)
+			f.Close()
+			os.Exit(1)
+		}
+	}
+
+	escribir([]string{"version", "workers", "corrida", "tiempo_ms"})
 	for _, r := range resultados {
 		for i, t := range r.tiempos {
-			w.Write([]string{
+			escribir([]string{
 				r.version,
 				strconv.Itoa(r.workers),
 				strconv.Itoa(i + 1),
@@ -319,8 +331,17 @@ func main() {
 			})
 		}
 	}
+
 	w.Flush()
-	f.Close()
+	if err := w.Error(); err != nil {
+		fmt.Fprintln(os.Stderr, "error al volcar el CSV:", err)
+		f.Close()
+		os.Exit(1)
+	}
+	if err := f.Close(); err != nil {
+		fmt.Fprintln(os.Stderr, "error al cerrar el CSV:", err)
+		os.Exit(1)
+	}
 
 	// --- Tabla 1: tiempos por configuracion ---
 	baseRec := mediaRecortada(sec)
