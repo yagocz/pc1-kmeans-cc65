@@ -1,0 +1,53 @@
+==============================================================
+PARTE 1 - METODO DEL CODO (justificacion de k)
+==============================================================
+registros: 4597137   |   iteraciones: 10   |   workers: 12
+
+k         inercia (MSSC)      reduccion       red. %
+2            12647122.05              -            -
+3            10506074.34     2141047.71       16.93%
+4             8958485.06     1547589.28       14.73%
+5             8431227.57      527257.49        5.89%
+6             7610227.08      821000.49        9.74%
+7             6977524.18      632702.90        8.31%
+8             6558768.18      418756.00        6.00%
+9             6173619.81      385148.38        5.87%
+10            5970483.85      203135.96        3.29%
+
+TODO(Andre): identifica el codo de la curva y justifica en el
+informe si k=5 fue una buena eleccion o si otro k la mejora.
+Si el codo NO cae en 5, dilo: es un hallazgo valido, no un error.
+
+==============================================================
+PARTE 2 - PERFILES CLINICOS (k = 5)
+==============================================================
+inercia final: 8431227.57
+
+cluster      registros         %          peso         talla     gestacion    edad madre
+                                           (g)          (cm)         (sem)       (anios)
+--------------------------------------------------------------------------------
+0              1069761    23.27%       3650.06         50.92         39.70         24.17
+1               658842    14.33%       2781.21         47.19         37.37         32.26
+2               866990    18.86%       3324.39         49.77         38.03         28.46
+3               991181    21.56%       3536.39         50.29         39.39         35.97
+4              1010363    21.98%       2991.25         48.18         39.01         22.12
+
+REFERENCIAS CLINICAS para interpretar (fuente: OMS):
+  - bajo peso al nacer      : < 2500 g
+  - peso normal             : 2500 - 4000 g
+  - macrosomia              : > 4000 g
+  - prematuro               : < 37 semanas de gestacion
+  - a termino               : 37 - 41 semanas
+  - postermino              : > 41 semanas
+  - embarazo adolescente    : madre < 20 anios
+  - edad materna avanzada   : madre >= 35 anios
+
+TODO(Andre): ponle un NOMBRE CLINICO a cada cluster usando estas
+referencias y las cifras de la tabla. Ejemplo del formato:
+  "Cluster 2 (18.9% de los nacimientos): recien nacidos a termino
+   de peso normal, madres jovenes"
+
+Esta es la seccion que CIERRA el caso de uso: demuestra que el
+clustering encontro perfiles con sentido clinico y no grupos
+arbitrarios. Es lo que conecta el ODS 3 con el resultado real.
+==============================================================

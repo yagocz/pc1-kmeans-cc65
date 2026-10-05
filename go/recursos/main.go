@@ -14,6 +14,7 @@
 // Go PURO: solo biblioteca estandar.
 //
 // Uso:
+//
 //	go run -tags recursos ./bench -datos ../data/processed/features.bin
 package main
 
